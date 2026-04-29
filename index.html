@@ -2416,15 +2416,15 @@
         <section class="lesson-section mission-section" id="mission">
             <div class="mission-header">
                 <span class="section-label" style="color: var(--accent-orange);">CLASS MISSION</span>
-                <h2>🎯 משימת כיתה: בניית "מערכת מוצרים"</h2>
+                <h2>🎯 משימת כיתה: בניית "חנות מוצרים"</h2>
                 <p style="color: var(--text-secondary); margin-top: 8px;">
-                    צרו 3 קבצי HTML באותה תיקיה, שמקושרים ביניהם. כל קובץ מכיל תוכן שונה.
+                    צרו 3 קבצי HTML באותה תיקיה. כל קובץ מכיל תוכן שונה, וניתן לנווט בין כולם.
                 </p>
             </div>
 
             <!-- מבנה הקבצים ויזואלי -->
             <h3>מבנה הפרויקט</h3>
-            <p>שלושת הקבצים נמצאים באותה תיקיה - לכן הקישור ביניהם הוא פשוט שם הקובץ:</p>
+            <p>שלושת הקבצים נמצאים באותה תיקיה. שם הקובץ הראשי חייב להיות <code>index.html</code>, את שני הקבצים האחרים אתם בוחרים:</p>
 
             <div class="file-structure-visual">
                 <div class="file-node">
@@ -2435,23 +2435,23 @@
                 <div class="file-arrow">⇄</div>
                 <div class="file-node">
                     <div class="file-node-icon">📊</div>
-                    <div class="file-node-name">catalog.html</div>
+                    <div class="file-node-name">???.html</div>
                     <div class="file-node-desc">טבלת מחירים</div>
                 </div>
                 <div class="file-arrow">⇄</div>
                 <div class="file-node">
                     <div class="file-node-icon">📸</div>
-                    <div class="file-node-name">details.html</div>
+                    <div class="file-node-name">???.html</div>
                     <div class="file-node-desc">תיאור + תמונות</div>
                 </div>
             </div>
 
             <div class="folder-tree">
-<span class="folder">📁 my-store/</span> <span class="file-comment">← כל הקבצים באותה תיקיה</span>
-<br><span class="tree-line">├── </span><span class="file-html">index.html</span> <span class="file-comment">← דף ראשי, רשימה + קישורים</span>
-<br><span class="tree-line">├── </span><span class="file-html">catalog.html</span> <span class="file-comment">← טבלה עם מוצרים ומחירים</span>
-<br><span class="tree-line">├── </span><span class="file-html">details.html</span> <span class="file-comment">← תיאור, תמונות, קישור חיצוני</span>
-<br><span class="tree-line">└── </span><span class="file-img">laptop.jpg</span> <span class="file-comment">← תמונה (אופציונלי)</span>
+<span class="folder">📁 my-store/</span> <span class="file-comment">← כל הקבצים באותה תיקיה!</span>
+<br><span class="tree-line">├── </span><span class="file-html">index.html</span> <span class="file-comment">← שם קבוע</span>
+<br><span class="tree-line">├── </span><span class="file-html">prices.html</span> <span class="file-comment">← אתם בוחרים את השם</span>
+<br><span class="tree-line">├── </span><span class="file-html">info.html</span> <span class="file-comment">← אתם בוחרים את השם</span>
+<br><span class="tree-line">└── </span><span class="file-img">laptop.jpg</span> <span class="file-comment">← תמונה (אופציונלי - מורידים מהרשת)</span>
             </div>
 
             <!-- הדרישות לכל קובץ -->
@@ -2466,9 +2466,9 @@
                 <div class="step-card-body">
                     <ul>
                         <li>כותרת ראשית <code>&lt;h1&gt;</code></li>
-                        <li>רשימה לא ממוספרת <code>&lt;ul&gt;</code> של 3 מוצרים</li>
-                        <li>כל מוצר ברשימה הוא קישור <code>&lt;a&gt;</code> שמוביל לקובץ השני</li>
-                        <li>תפריט ניווט <code>&lt;nav&gt;</code> לשאר הדפים</li>
+                        <li>רשימה לא ממוספרת <code>&lt;ul&gt;</code> של מוצרים</li>
+                        <li>כל מוצר ברשימה הוא <strong>קישור לאתר חיצוני ברשת</strong> - למשל דף מוצר ב-KSP, אמזון וכו' (עם <code>target="_blank"</code>)</li>
+                        <li>תפריט ניווט <code>&lt;nav&gt;</code> שמקשר לשני הקבצים האחרים שלכם</li>
                     </ul>
                 </div>
             </div>
@@ -2477,13 +2477,14 @@
             <div class="step-card">
                 <div class="step-card-header">
                     <span class="step-badge">קובץ 2</span>
-                    <h4>catalog.html - קטלוג מחירים</h4>
+                    <h4>???.html - אתם בוחרים את השם</h4>
                 </div>
                 <div class="step-card-body">
                     <ul>
+                        <li>כותרת <code>&lt;h1&gt;</code></li>
                         <li>טבלה <code>&lt;table&gt;</code> עם <code>&lt;thead&gt;</code> ו-<code>&lt;tbody&gt;</code></li>
-                        <li>2 עמודות: "שם מוצר" ו-"מחיר"</li>
-                        <li>קישור חזרה ל-index וקישור ל-details</li>
+                        <li>2 עמודות: <strong>"שם מוצר"</strong> ו-<strong>"מחיר"</strong></li>
+                        <li>תפריט ניווט <code>&lt;nav&gt;</code> לשני הקבצים האחרים</li>
                     </ul>
                 </div>
             </div>
@@ -2492,28 +2493,35 @@
             <div class="step-card">
                 <div class="step-card-header">
                     <span class="step-badge">קובץ 3</span>
-                    <h4>details.html - פירוט ותמונות</h4>
+                    <h4>???.html - אתם בוחרים את השם</h4>
                 </div>
                 <div class="step-card-body">
                     <ul>
-                        <li>פסקה <code>&lt;p&gt;</code> עם תיאור חופשי על המוצרים</li>
-                        <li>תמונה <code>&lt;img&gt;</code> של מוצר</li>
-                        <li>קישור עם תמונה - לוגו קטן שבלחיצה מוביל לאתר חיצוני (כמו KSP)</li>
-                        <li>השתמשו ב-<code>target="_blank"</code> לקישור חיצוני</li>
-                        <li>קישורי חזרה ל-index ול-catalog</li>
+                        <li>פסקה <code>&lt;p&gt;</code> - כתבו מה שבא לכם על המוצרים</li>
+                        <li>תמונה <code>&lt;img&gt;</code> של מוצר (הורידו תמונה מהרשת לתיקיה, או שימו URL חיצוני)</li>
+                        <li><strong>קישור עם תמונה</strong> - לוגו קטן שבלחיצה עליו מוביל לאתר חיצוני</li>
+                        <li>תפריט ניווט <code>&lt;nav&gt;</code> לשני הקבצים האחרים</li>
                     </ul>
                 </div>
             </div>
 
+            <div class="info-card important">
+                <div class="info-card-title">🔑 ההבדל החשוב</div>
+                <p>
+                    <strong>רשימת המוצרים ב-index.html</strong> מקשרת <strong>לאתרים ברשת</strong> (KSP, אמזון וכו') עם <code>target="_blank"</code>.<br>
+                    <strong>תפריט הניווט (nav)</strong> מקשר <strong>בין הקבצים שלכם</strong> - בלי target="_blank" כי אלה דפים שלכם.
+                </p>
+            </div>
+
             <!-- קוד כל שלושת הקבצים -->
-            <h3>הקוד המלא - 3 הקבצים</h3>
-            <p>לחצו על הטאבים כדי לראות את הקוד של כל קובץ:</p>
+            <h3>דוגמה מלאה - הקוד של 3 הקבצים</h3>
+            <p>בדוגמה הזו בחרנו את השמות <code>prices.html</code> ו-<code>info.html</code> - אתם יכולים לבחור שמות אחרים:</p>
 
             <div class="preview-container">
                 <div class="preview-tabs">
                     <button class="preview-tab active" onclick="showTab('code', 0)">📄 index.html</button>
-                    <button class="preview-tab" onclick="showTab('code', 1)">📄 catalog.html</button>
-                    <button class="preview-tab" onclick="showTab('code', 2)">📄 details.html</button>
+                    <button class="preview-tab" onclick="showTab('code', 1)">📄 prices.html</button>
+                    <button class="preview-tab" onclick="showTab('code', 2)">📄 info.html</button>
                 </div>
 
                 <!-- index.html code -->
@@ -2526,37 +2534,49 @@
 <span class="tag">&lt;/head&gt;</span>
 <span class="tag">&lt;body&gt;</span>
 
-    <span class="comment">&lt;!-- כותרת ראשית --&gt;</span>
     <span class="tag">&lt;h1&gt;</span>ברוכים הבאים לחנות הטכנולוגיה<span class="tag">&lt;/h1&gt;</span>
 
-    <span class="tag">&lt;p&gt;</span>בחרו מוצר מהרשימה כדי לראות פרטים נוספים:<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;p&gt;</span>המוצרים המומלצים שלנו - לחצו לצפייה באתר המקורי:<span class="tag">&lt;/p&gt;</span>
 
-    <span class="comment">&lt;!-- רשימה לא ממוספרת - כל פריט הוא קישור --&gt;</span>
+    <span class="comment">&lt;!-- רשימה לא ממוספרת --&gt;</span>
+    <span class="comment">&lt;!-- כל מוצר מקשר לאתר חיצוני ברשת --&gt;</span>
     <span class="tag">&lt;ul&gt;</span>
-        <span class="tag">&lt;li&gt;</span><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"catalog.html"</span><span class="tag">&gt;</span>מחשב נייד Gaming<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/li&gt;</span>
-        <span class="tag">&lt;li&gt;</span><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"catalog.html"</span><span class="tag">&gt;</span>מקלדת מכנית<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/li&gt;</span>
-        <span class="tag">&lt;li&gt;</span><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"catalog.html"</span><span class="tag">&gt;</span>עכבר אלחוטי<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://ksp.co.il/web/item/12345"</span> <span class="attr">target</span>=<span class="val">"_blank"</span><span class="tag">&gt;</span>
+                מחשב נייד Gaming - KSP
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://www.amazon.com/dp/B09ABC1234"</span> <span class="attr">target</span>=<span class="val">"_blank"</span><span class="tag">&gt;</span>
+                מקלדת מכנית - Amazon
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://www.ivory.co.il/catalog.php?id=67890"</span> <span class="attr">target</span>=<span class="val">"_blank"</span><span class="tag">&gt;</span>
+                עכבר אלחוטי - Ivory
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
     <span class="tag">&lt;/ul&gt;</span>
 
     <span class="tag">&lt;hr&gt;</span>
 
-    <span class="comment">&lt;!-- תפריט ניווט בין הדפים --&gt;</span>
+    <span class="comment">&lt;!-- ניווט בין הקבצים שלנו (לא חיצוני!) --&gt;</span>
     <span class="tag">&lt;nav&gt;</span>
-        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"catalog.html"</span><span class="tag">&gt;</span>לקטלוג המחירים<span class="tag">&lt;/a&gt;</span> |
-        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"details.html"</span><span class="tag">&gt;</span>לדף תמונות ופירוט<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"prices.html"</span><span class="tag">&gt;</span>טבלת מחירים<span class="tag">&lt;/a&gt;</span> |
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"info.html"</span><span class="tag">&gt;</span>מידע ותמונות<span class="tag">&lt;/a&gt;</span>
     <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;/body&gt;</span>
 <span class="tag">&lt;/html&gt;</span></pre>
                 </div>
 
-                <!-- catalog.html code -->
+                <!-- prices.html code -->
                 <div class="preview-panel" id="code-1">
                     <pre class="preview-code"><span class="tag">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"he"</span> <span class="attr">dir</span>=<span class="val">"rtl"</span><span class="tag">&gt;</span>
 <span class="tag">&lt;head&gt;</span>
     <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">&gt;</span>
-    <span class="tag">&lt;title&gt;</span>קטלוג מחירים<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;title&gt;</span>מחירון מוצרים<span class="tag">&lt;/title&gt;</span>
 <span class="tag">&lt;/head&gt;</span>
 <span class="tag">&lt;body&gt;</span>
 
@@ -2588,29 +2608,29 @@
 
     <span class="tag">&lt;hr&gt;</span>
 
-    <span class="comment">&lt;!-- ניווט בין הדפים --&gt;</span>
+    <span class="comment">&lt;!-- ניווט בין הקבצים --&gt;</span>
     <span class="tag">&lt;nav&gt;</span>
         <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"index.html"</span><span class="tag">&gt;</span>חזרה לדף הבית<span class="tag">&lt;/a&gt;</span> |
-        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"details.html"</span><span class="tag">&gt;</span>לדף תמונות ופירוט<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"info.html"</span><span class="tag">&gt;</span>מידע ותמונות<span class="tag">&lt;/a&gt;</span>
     <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;/body&gt;</span>
 <span class="tag">&lt;/html&gt;</span></pre>
                 </div>
 
-                <!-- details.html code -->
+                <!-- info.html code -->
                 <div class="preview-panel" id="code-2">
                     <pre class="preview-code"><span class="tag">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"he"</span> <span class="attr">dir</span>=<span class="val">"rtl"</span><span class="tag">&gt;</span>
 <span class="tag">&lt;head&gt;</span>
     <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">&gt;</span>
-    <span class="tag">&lt;title&gt;</span>פירוט מוצרים ותמונות<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;title&gt;</span>מידע על המוצרים<span class="tag">&lt;/title&gt;</span>
 <span class="tag">&lt;/head&gt;</span>
 <span class="tag">&lt;body&gt;</span>
 
     <span class="tag">&lt;h1&gt;</span>קצת על המוצרים שלנו<span class="tag">&lt;/h1&gt;</span>
 
-    <span class="comment">&lt;!-- פסקה עם תיאור חופשי --&gt;</span>
+    <span class="comment">&lt;!-- פסקה - כתבו מה שבא לכם --&gt;</span>
     <span class="tag">&lt;p&gt;</span>
         המוצרים שלנו נבחרים בקפידה. אנחנו שמים דגש על
         איכות, עמידות וביצועים גבוהים לעולם הטכנולוגיה.
@@ -2618,15 +2638,13 @@
 
     <span class="comment">&lt;!-- תמונת מוצר --&gt;</span>
     <span class="tag">&lt;h3&gt;</span>המוצר הנבחר:<span class="tag">&lt;/h3&gt;</span>
-    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"https://via.placeholder.com/300x200?text=Gaming+Laptop"</span>
-         <span class="attr">alt</span>=<span class="val">"מחשב נייד לגיימינג"</span>
-         <span class="attr">width</span>=<span class="val">"300"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"laptop.jpg"</span> <span class="attr">alt</span>=<span class="val">"מחשב נייד"</span> <span class="attr">width</span>=<span class="val">"300"</span><span class="tag">&gt;</span>
 
     <span class="comment">&lt;!-- קישור עם תמונה - לוגו שמוביל לאתר חיצוני --&gt;</span>
-    <span class="tag">&lt;h3&gt;</span>לחצו על הלוגו לאתר KSP:<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;h3&gt;</span>לחצו על הלוגו לרכישה:<span class="tag">&lt;/h3&gt;</span>
     <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://ksp.co.il"</span> <span class="attr">target</span>=<span class="val">"_blank"</span><span class="tag">&gt;</span>
         <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"https://via.placeholder.com/120x50?text=KSP"</span>
-             <span class="attr">alt</span>=<span class="val">"לוגו KSP - לחץ למעבר"</span><span class="tag">&gt;</span>
+             <span class="attr">alt</span>=<span class="val">"לוגו KSP - לחץ לרכישה"</span><span class="tag">&gt;</span>
     <span class="tag">&lt;/a&gt;</span>
 
     <span class="tag">&lt;hr&gt;</span>
@@ -2634,7 +2652,7 @@
     <span class="comment">&lt;!-- ניווט חזרה --&gt;</span>
     <span class="tag">&lt;nav&gt;</span>
         <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"index.html"</span><span class="tag">&gt;</span>חזרה לדף הבית<span class="tag">&lt;/a&gt;</span> |
-        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"catalog.html"</span><span class="tag">&gt;</span>חזרה לקטלוג<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"prices.html"</span><span class="tag">&gt;</span>טבלת מחירים<span class="tag">&lt;/a&gt;</span>
     <span class="tag">&lt;/nav&gt;</span>
 
 <span class="tag">&lt;/body&gt;</span>
@@ -2644,13 +2662,13 @@
 
             <!-- תצוגה חיה -->
             <h3>איך זה נראה בדפדפן? (תוצאה סופית)</h3>
-            <p>לחצו על הטאבים כדי לראות את התוצאה של כל דף:</p>
+            <p>לחצו על הטאבים לראות כל דף. הקישורים בין הדפים עובדים - נסו:</p>
 
             <div class="preview-container">
                 <div class="preview-tabs">
                     <button class="preview-tab active" onclick="showTab('result', 0)">🏠 index.html</button>
-                    <button class="preview-tab" onclick="showTab('result', 1)">📊 catalog.html</button>
-                    <button class="preview-tab" onclick="showTab('result', 2)">📸 details.html</button>
+                    <button class="preview-tab" onclick="showTab('result', 1)">📊 prices.html</button>
+                    <button class="preview-tab" onclick="showTab('result', 2)">📸 info.html</button>
                 </div>
 
                 <!-- index.html result -->
@@ -2661,101 +2679,87 @@
                     </div>
                     <div class="live-result-body">
                         <h1>ברוכים הבאים לחנות הטכנולוגיה</h1>
-                        <p>בחרו מוצר מהרשימה כדי לראות פרטים נוספים:</p>
+                        <p>המוצרים המומלצים שלנו - לחצו לצפייה באתר המקורי:</p>
                         <ul>
-                            <li><a href="#" onclick="showTab('result', 1); return false;">מחשב נייד Gaming</a></li>
-                            <li><a href="#" onclick="showTab('result', 1); return false;">מקלדת מכנית</a></li>
-                            <li><a href="#" onclick="showTab('result', 1); return false;">עכבר אלחוטי</a></li>
+                            <li><a href="https://ksp.co.il" target="_blank" style="color:#2563eb;">מחשב נייד Gaming - KSP ↗</a></li>
+                            <li><a href="https://www.amazon.com" target="_blank" style="color:#2563eb;">מקלדת מכנית - Amazon ↗</a></li>
+                            <li><a href="https://www.ivory.co.il" target="_blank" style="color:#2563eb;">עכבר אלחוטי - Ivory ↗</a></li>
                         </ul>
                         <hr>
                         <nav>
-                            <a href="#" onclick="showTab('result', 1); return false;">לקטלוג המחירים</a> |
-                            <a href="#" onclick="showTab('result', 2); return false;">לדף תמונות ופירוט</a>
+                            <a href="#" onclick="showTab('result', 1); return false;">טבלת מחירים</a> |
+                            <a href="#" onclick="showTab('result', 2); return false;">מידע ותמונות</a>
                         </nav>
                     </div>
                 </div>
 
-                <!-- catalog.html result -->
+                <!-- prices.html result -->
                 <div class="preview-panel" id="result-1">
                     <div class="live-result-header">
                         <div class="dots"><span></span><span></span><span></span></div>
-                        <div class="live-result-url">file:///C:/my-store/catalog.html</div>
+                        <div class="live-result-url">file:///C:/my-store/prices.html</div>
                     </div>
                     <div class="live-result-body">
                         <h1>מחירון מוצרים</h1>
                         <table>
                             <thead>
-                                <tr>
-                                    <th>שם המוצר</th>
-                                    <th>מחיר</th>
-                                </tr>
+                                <tr><th>שם המוצר</th><th>מחיר</th></tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>מחשב נייד Gaming</td>
-                                    <td>4,500 ש"ח</td>
-                                </tr>
-                                <tr>
-                                    <td>מקלדת מכנית</td>
-                                    <td>350 ש"ח</td>
-                                </tr>
-                                <tr>
-                                    <td>עכבר אלחוטי</td>
-                                    <td>150 ש"ח</td>
-                                </tr>
+                                <tr><td>מחשב נייד Gaming</td><td>4,500 ש"ח</td></tr>
+                                <tr><td>מקלדת מכנית</td><td>350 ש"ח</td></tr>
+                                <tr><td>עכבר אלחוטי</td><td>150 ש"ח</td></tr>
                             </tbody>
                         </table>
                         <hr>
                         <nav>
                             <a href="#" onclick="showTab('result', 0); return false;">חזרה לדף הבית</a> |
-                            <a href="#" onclick="showTab('result', 2); return false;">לדף תמונות ופירוט</a>
+                            <a href="#" onclick="showTab('result', 2); return false;">מידע ותמונות</a>
                         </nav>
                     </div>
                 </div>
 
-                <!-- details.html result -->
+                <!-- info.html result -->
                 <div class="preview-panel" id="result-2">
                     <div class="live-result-header">
                         <div class="dots"><span></span><span></span><span></span></div>
-                        <div class="live-result-url">file:///C:/my-store/details.html</div>
+                        <div class="live-result-url">file:///C:/my-store/info.html</div>
                     </div>
                     <div class="live-result-body">
                         <h1>קצת על המוצרים שלנו</h1>
-                        <p>
-                            המוצרים שלנו נבחרים בקפידה. אנחנו שמים דגש על
-                            איכות, עמידות וביצועים גבוהים לעולם הטכנולוגיה.
-                        </p>
+                        <p>המוצרים שלנו נבחרים בקפידה. אנחנו שמים דגש על איכות, עמידות וביצועים גבוהים לעולם הטכנולוגיה.</p>
                         <h3>המוצר הנבחר:</h3>
-                        <img src="https://via.placeholder.com/300x200/e2e8f0/333?text=Gaming+Laptop" alt="מחשב נייד לגיימינג" width="300" style="border: 1px solid #d1d5db;">
-                        <h3>לחצו על הלוגו לאתר KSP:</h3>
+                        <img src="https://via.placeholder.com/300x200/e2e8f0/333?text=Gaming+Laptop" alt="מחשב נייד" width="300" style="border: 1px solid #d1d5db;">
+                        <h3>לחצו על הלוגו לרכישה:</h3>
                         <a href="https://ksp.co.il" target="_blank">
-                            <img src="https://via.placeholder.com/120x50/2563eb/fff?text=KSP" alt="לוגו KSP" style="border: 1px solid #d1d5db;">
+                            <img src="https://via.placeholder.com/120x50/2563eb/fff?text=KSP" alt="לוגו KSP" style="border: 1px solid #d1d5db; cursor: pointer;">
                         </a>
                         <hr>
                         <nav>
                             <a href="#" onclick="showTab('result', 0); return false;">חזרה לדף הבית</a> |
-                            <a href="#" onclick="showTab('result', 1); return false;">חזרה לקטלוג</a>
+                            <a href="#" onclick="showTab('result', 1); return false;">טבלת מחירים</a>
                         </nav>
                     </div>
                 </div>
             </div>
 
             <div class="info-card tip">
-                <div class="info-card-title">💡 שימו לב לקישורים!</div>
+                <div class="info-card-title">💡 הקישורים בתצוגה עובדים!</div>
                 <p>
-                    בדוגמה החיה למעלה הקישורים עובדים בין הטאבים - לחצו עליהם ותראו את הדפים מתחלפים.
-                    בפרויקט האמיתי שלכם, כל קובץ הוא דף HTML נפרד ב-VS Code, והדפדפן יפתח אותו בלחיצה על הקישור.
+                    לחצו על "טבלת מחירים" או "מידע ותמונות" בתצוגה החיה למעלה ותראו את הטאבים מתחלפים.
+                    הקישורים של המוצרים (KSP, Amazon, Ivory) מסומנים עם ↗ כי הם נפתחים בטאב חדש באתר חיצוני.
                 </p>
             </div>
 
             <div class="info-card warning" style="border-right-color: var(--accent-orange);">
-                <div class="info-card-title" style="color: var(--accent-orange);">⚠️ דגשים למשימה</div>
+                <div class="info-card-title" style="color: var(--accent-orange);">⚠️ דגשים חשובים</div>
                 <p>
-                    <strong>אותה תיקיה</strong> - שמרו את כל 3 הקבצים באותה תיקיה, אחרת הקישורים יישברו.<br>
-                    <strong>הערות בקוד</strong> - הוסיפו <code>&lt;!-- הערה --&gt;</code> שמסבירות מה כל חלק עושה.<br>
-                    <strong>target="_blank"</strong> - השתמשו בזה רק לקישורים חיצוניים (כמו KSP), לא לניווט בין דפים שלכם.<br>
-                    <strong>alt בתמונות</strong> - תמיד כתבו תיאור, גם אם קצר.<br>
-                    <strong>ניווט הלוך-חזור</strong> - וודאו שמכל דף אפשר להגיע לכל דף אחר.
+                    <strong>אותה תיקיה</strong> - שמרו את כל 3 הקבצים באותה תיקיה, אחרת הקישורים ביניהם יישברו.<br>
+                    <strong>שמות קבצים</strong> - בלי רווחים, בלי עברית. השתמשו באנגלית קטנה: <code>prices.html</code> ולא <code>Prices.html</code>.<br>
+                    <strong>target="_blank"</strong> - רק לקישורים חיצוניים (KSP, אמזון). לניווט בין הקבצים שלכם - בלי זה.<br>
+                    <strong>הערות בקוד</strong> - הוסיפו <code>&lt;!-- הסבר --&gt;</code> שמסבירות מה כל חלק עושה.<br>
+                    <strong>ניווט הלוך-חזור</strong> - מכל דף צריך להיות אפשר להגיע לכל דף אחר.<br>
+                    <strong>תמונות</strong> - אם מורידים תמונה, שמים אותה באותה תיקיה וכותבים רק את שמה: <code>src="laptop.jpg"</code>.
                 </p>
             </div>
         </section>
