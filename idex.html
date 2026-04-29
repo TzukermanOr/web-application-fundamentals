@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Application Fundamentals</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===========================
+           CSS VARIABLES - משתנים
+           נגדיר כאן את כל הצבעים והגדלים
+           כדי לשמור על עקביות באתר כולו
+        =========================== */
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2235;
+            --bg-code: #0d1117;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-cyan: #22d3ee;
+            --accent-green: #34d399;
+            --accent-purple: #a78bfa;
+            --accent-orange: #fb923c;
+            --accent-pink: #f472b6;
+            --accent-yellow: #fbbf24;
+            --border-color: #1e293b;
+            --font-body: 'IBM Plex Sans Hebrew', sans-serif;
+            --font-code: 'Fira Code', monospace;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        /* ===========================
+           RESET - איפוס ברירות מחדל
+           הדפדפנים מוסיפים עיצוב ברירת מחדל,
+           אנחנו מאפסים אותו כדי לשלוט בכל פיקסל
+        =========================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===========================
+           SCROLLBAR - עיצוב פס הגלילה
+        =========================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 4px;
+        }
+
+        /* ===========================
+           BODY - גוף הדף
+           כאן מגדירים את העיצוב הבסיסי של כל הדף
+        =========================== */
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* ===========================
+           HERO - הבאנר הראשי
+           שימוש ב-linear-gradient ליצירת רקע שיפועי
+        =========================== */
+        .hero {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(34,211,238,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(167,139,250,0.08) 0%, transparent 50%),
+                var(--bg-primary);
+            overflow: hidden;
+        }
+
+        /* קווי רשת דקורטיביים ברקע */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(34,211,238,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(34,211,238,0.1);
+            border: 1px solid rgba(34,211,238,0.2);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.6s ease 0.1s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            animation: fadeInDown 0.6s ease 0.2s both;
+        }
+
+        /* ===========================
+           NAVIGATION - תפריט ניווט
+        =========================== */
+        .toc {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInDown 0.6s ease 0.3s both;
+        }
+
+        .toc a {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+        }
+
+        .toc a:hover {
+            color: var(--accent-cyan);
+            border-color: rgba(34,211,238,0.3);
+            background: rgba(34,211,238,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ===========================
+           LAYOUT - מבנה כללי
+        =========================== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===========================
+           SECTIONS - חלקים
+        =========================== */
+        .lesson-section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .label-html { color: var(--accent-orange); }
+        .label-css { color: var(--accent-cyan); }
+        .label-structure { color: var(--accent-green); }
+        .label-tips { color: var(--accent-yellow); }
+        .label-demo { color: var(--accent-pink); }
+
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .lesson-section h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 32px;
+            max-width: 700px;
+        }
+
+        .lesson-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 36px 0 12px;
+            color: var(--text-primary);
+        }
+
+        .lesson-section p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* ===========================
+           CODE BLOCKS - בלוקי קוד
+           כאן מעצבים את תיבות הקוד
+        =========================== */
+        .code-block {
+            position: relative;
+            background: var(--bg-code);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin: 20px 0 28px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-code);
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .code-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .code-dots span:nth-child(1) { background: #ef4444; }
+        .code-dots span:nth-child(2) { background: #fbbf24; }
+        .code-dots span:nth-child(3) { background: #22c55e; }
+
+        .code-block pre {
+            padding: 20px;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            direction: ltr;
+            text-align: left;
+            color: var(--text-secondary);
+        }
+
+        /* הדגשת תחביר (Syntax Highlighting) */
+        .tag { color: #f472b6; }
+        .attr { color: #a78bfa; }
+        .val { color: #34d399; }
+        .comment { color: #4a5568; font-style: italic; }
+        .prop { color: #22d3ee; }
+        .selector { color: #fb923c; }
+        .unit { color: #fbbf24; }
+        .keyword { color: #f472b6; }
+        .string { color: #34d399; }
+
+        /* ===========================
+           INFO CARDS - כרטיסי מידע
+        =========================== */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .info-card.tip {
+            border-right: 3px solid var(--accent-green);
+        }
+        .info-card.warning {
+            border-right: 3px solid var(--accent-orange);
+        }
+        .info-card.important {
+            border-right: 3px solid var(--accent-pink);
+        }
+
+        .info-card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .info-card.tip .info-card-title { color: var(--accent-green); }
+        .info-card.warning .info-card-title { color: var(--accent-orange); }
+        .info-card.important .info-card-title { color: var(--accent-pink); }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ===========================
+           CONCEPT GRID - רשת מושגים
+        =========================== */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .concept-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.25s ease;
+        }
+
+        .concept-card:hover {
+            border-color: rgba(34,211,238,0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .concept-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .concept-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .concept-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* ===========================
+           INLINE CODE - קוד בתוך טקסט
+        =========================== */
+        code {
+            font-family: var(--font-code);
+            background: rgba(34,211,238,0.08);
+            color: var(--accent-cyan);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.88em;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* ===========================
+           COMPARISON TABLE - טבלת השוואה
+        =========================== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.92rem;
+        }
+
+        .comparison-table th {
+            background: rgba(34,211,238,0.08);
+            color: var(--accent-cyan);
+            padding: 14px 18px;
+            text-align: right;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .comparison-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* ===========================
+           DEMO AREA - אזור הדגמה חי
+        =========================== */
+        .demo-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .demo-area h4 {
+            color: var(--accent-pink);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        /* דוגמאות Box Model */
+        .box-model-demo {
+            direction: ltr;
+            text-align: center;
+        }
+
+        .box-margin {
+            background: rgba(251,146,60,0.15);
+            border: 2px dashed var(--accent-orange);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .box-margin::after {
+            content: 'margin';
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            font-size: 0.7rem;
+            color: var(--accent-orange);
+            font-family: var(--font-code);
+        }
+
+        .box-border {
+            background: rgba(167,139,250,0.15);
+            border: 3px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+        .box-border::after {
+            content: 'border';
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            font-size: 0.7rem;
+            color: var(--accent-purple);
+            font-family: var(--font-code);
+        }
+
+        .box-padding {
+            background: rgba(52,211,153,0.15);
+            border: 2px dashed var(--accent-green);
+            padding: 20px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .box-padding::after {
+            content: 'padding';
+            position: absolute;
+            top: 4px;
+            left: 8px;
+            font-size: 0.7rem;
+            color: var(--accent-green);
+            font-family: var(--font-code);
+        }
+
+        .box-content {
+            background: rgba(34,211,238,0.2);
+            border: 2px solid var(--accent-cyan);
+            padding: 16px;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* דוגמאות Flexbox */
+        .flex-demo {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        .flex-item {
+            background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(167,139,250,0.15));
+            border: 1px solid rgba(34,211,238,0.2);
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            text-align: center;
+            min-width: 80px;
+        }
+
+        /* דוגמאות Grid */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(244,114,182,0.15));
+            border: 1px solid rgba(167,139,250,0.2);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+            text-align: center;
+        }
+
+        .grid-item.span-2 {
+            grid-column: span 2;
+        }
+
+        /* דוגמת כפתורים */
+        .button-demo {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+        .btn-primary:hover {
+            background: #06b6d4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(34,211,238,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1.5px solid var(--accent-cyan);
+        }
+        .btn-outline:hover {
+            background: rgba(34,211,238,0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+
+        /* ===========================
+           SELECTOR EXAMPLES - דוגמאות סלקטורים
+        =========================== */
+        .selector-example {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .selector-example:last-child {
+            border-bottom: none;
+        }
+
+        .selector-code {
+            min-width: 200px;
+            font-family: var(--font-code);
+            font-size: 0.88rem;
+            color: var(--accent-cyan);
+            direction: ltr;
+        }
+
+        .selector-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===========================
+           FOOTER - כותרת תחתונה
+        =========================== */
+        .site-footer {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .site-footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===========================
+           ANIMATIONS - אנימציות
+        =========================== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===========================
+           RESPONSIVE - התאמה למובייל
+           media query משנה עיצוב לפי גודל מסך
+        =========================== */
+        @media (max-width: 640px) {
+            .hero { min-height: 50vh; padding: 40px 16px; }
+            .hero h1 { font-size: 1.8rem; }
+            .toc { flex-direction: column; align-items: stretch; }
+            .toc a { text-align: center; }
+            .lesson-section { padding: 48px 0; }
+            .lesson-section h2 { font-size: 1.5rem; }
+            .concept-grid { grid-template-columns: 1fr; }
+            .grid-demo { grid-template-columns: 1fr 1fr; }
+            .grid-item.span-2 { grid-column: span 1; }
+            .selector-example { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .selector-code { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================
+         HERO SECTION - הבאנר הראשי
+    ================================= -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Web Application Fundamentals</span>
+            <h1>איך בונים <span class="gradient-text">אתר אינטרנט</span> מאפס</h1>
+            <p>מדריך מקיף ומעשי ללימוד HTML ו-CSS - מהמבנה הבסיסי ועד עיצוב מתקדם. כל מה שצריך כדי להתחיל לבנות דפי ווב.</p>
+            <nav class="toc">
+                <a href="#html-basics">מבנה HTML</a>
+                <a href="#tags">תגיות חשובות</a>
+                <a href="#css-basics">יסודות CSS</a>
+                <a href="#box-model">Box Model</a>
+                <a href="#layout">Flexbox &amp; Grid</a>
+                <a href="#responsive">רספונסיביות</a>
+            </nav>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- ================================
+             SECTION 1 - מבנה HTML בסיסי
+        ================================= -->
+        <section class="lesson-section" id="html-basics">
+            <span class="section-label label-html">HTML</span>
+            <h2>מבנה דף HTML</h2>
+            <p class="section-desc">
+                HTML - שפת תגיות שמגדירה את המבנה והתוכן של דף ווב.
+                כל דף HTML בנוי מתגיות מקוננות שיוצרות עץ היררכי.
+            </p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">📄</div>
+                    <h4>DOCTYPE</h4>
+                    <p>הצהרה לדפדפן שזהו מסמך HTML5. תמיד בשורה הראשונה.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">🧠</div>
+                    <h4>head</h4>
+                    <p>מטא-דאטה: כותרת הטאב, קידוד, CSS, ומידע שלא נראה בדף עצמו.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">👁️</div>
+                    <h4>body</h4>
+                    <p>כל התוכן הנראה למשתמש: טקסט, תמונות, קישורים, טפסים.</p>
+                </div>
+            </div>
+
+            <h3>השלד הבסיסי</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>index.html</span>
+                </div>
+<pre><span class="comment">&lt;!-- הצהרה שזה מסמך HTML5 --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"he"</span> <span class="attr">dir</span>=<span class="val">"rtl"</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;head&gt;</span>
+    <span class="comment">&lt;!-- קידוד תווים - תמיד UTF-8 --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- התאמה למובייל --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- כותרת שמופיעה בטאב --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>שם האתר<span class="tag">&lt;/title&gt;</span>
+
+    <span class="comment">&lt;!-- קישור לקובץ CSS חיצוני --&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"style.css"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;header&gt;</span>
+        <span class="tag">&lt;nav&gt;</span>תפריט ניווט<span class="tag">&lt;/nav&gt;</span>
+    <span class="tag">&lt;/header&gt;</span>
+
+    <span class="tag">&lt;main&gt;</span>
+        <span class="tag">&lt;h1&gt;</span>כותרת ראשית<span class="tag">&lt;/h1&gt;</span>
+        <span class="tag">&lt;p&gt;</span>תוכן הדף<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/main&gt;</span>
+
+    <span class="tag">&lt;footer&gt;</span>
+        <span class="tag">&lt;p&gt;</span>כותרת תחתונה<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/footer&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+
+<span class="tag">&lt;/html&gt;</span></pre>
+            </div>
+
+            <div class="info-card tip">
+                <div class="info-card-title">💡 טיפ</div>
+                <p>תגיות סמנטיות כמו <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>
+                עדיפות על <code>&lt;div&gt;</code> גנרי - הן עוזרות לקוראי מסך, ל-SEO, ולקריאות הקוד.</p>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION 2 - תגיות חשובות
+        ================================= -->
+        <section class="lesson-section" id="tags">
+            <span class="section-label label-html">HTML</span>
+            <h2>תגיות חשובות</h2>
+            <p class="section-desc">התגיות הנפוצות ביותר שתשתמשו בהן כמעט בכל דף.</p>
+
+            <h3>כותרות וטקסט</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>text.html</span>
+                </div>
+<pre><span class="comment">&lt;!-- היררכיית כותרות: h1 הגדולה ביותר, h6 הקטנה --&gt;</span>
+<span class="tag">&lt;h1&gt;</span>כותרת ראשית<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>כותרת משנית<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>כותרת משנית נוספת<span class="tag">&lt;/h3&gt;</span>
+
+<span class="comment">&lt;!-- פסקה --&gt;</span>
+<span class="tag">&lt;p&gt;</span>טקסט רגיל בתוך פסקה<span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- הדגשות --&gt;</span>
+<span class="tag">&lt;strong&gt;</span>טקסט מודגש (חשיבות)<span class="tag">&lt;/strong&gt;</span>
+<span class="tag">&lt;em&gt;</span>טקסט נטוי (הדגשה)<span class="tag">&lt;/em&gt;</span>
+
+<span class="comment">&lt;!-- שבירת שורה וקו מפריד --&gt;</span>
+<span class="tag">&lt;br&gt;</span>   <span class="comment">&lt;!-- שבירת שורה --&gt;</span>
+<span class="tag">&lt;hr&gt;</span>   <span class="comment">&lt;!-- קו מפריד אופקי --&gt;</span></pre>
+            </div>
+
+            <h3>קישורים ותמונות</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>links-images.html</span>
+                </div>
+<pre><span class="comment">&lt;!-- קישור בסיסי --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>לחץ כאן<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- קישור שנפתח בטאב חדש --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span> <span class="attr">target</span>=<span class="val">"_blank"</span> <span class="attr">rel</span>=<span class="val">"noopener noreferrer"</span><span class="tag">&gt;</span>
+    קישור חיצוני
+<span class="tag">&lt;/a&gt;</span>
+
+<span class="comment">&lt;!-- תמונה --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.jpg"</span> <span class="attr">alt</span>=<span class="val">"תיאור התמונה"</span> <span class="attr">width</span>=<span class="val">"400"</span><span class="tag">&gt;</span>
+
+<span class="comment">&lt;!-- תמונה שהיא קישור --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"logo.png"</span> <span class="attr">alt</span>=<span class="val">"לוגו"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/a&gt;</span></pre>
+            </div>
+
+            <h3>רשימות וטבלאות</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>lists-tables.html</span>
+                </div>
+<pre><span class="comment">&lt;!-- רשימה לא ממוספרת --&gt;</span>
+<span class="tag">&lt;ul&gt;</span>
+    <span class="tag">&lt;li&gt;</span>פריט ראשון<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span>פריט שני<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="comment">&lt;!-- רשימה ממוספרת --&gt;</span>
+<span class="tag">&lt;ol&gt;</span>
+    <span class="tag">&lt;li&gt;</span>שלב ראשון<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;li&gt;</span>שלב שני<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+
+<span class="comment">&lt;!-- טבלה --&gt;</span>
+<span class="tag">&lt;table&gt;</span>
+    <span class="tag">&lt;thead&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th&gt;</span>שם<span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th&gt;</span>תפקיד<span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;/thead&gt;</span>
+    <span class="tag">&lt;tbody&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td&gt;</span>ישראל<span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span>מפתח<span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></pre>
+            </div>
+
+            <h3>טפסים</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>form.html</span>
+                </div>
+<pre><span class="tag">&lt;form</span> <span class="attr">action</span>=<span class="val">"/submit"</span> <span class="attr">method</span>=<span class="val">"POST"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- שדה טקסט עם תווית --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"name"</span><span class="tag">&gt;</span>שם מלא:<span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">id</span>=<span class="val">"name"</span> <span class="attr">name</span>=<span class="val">"name"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- שדה מייל --&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"email"</span> <span class="attr">placeholder</span>=<span class="val">"your@email.com"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- שדה סיסמה --&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"password"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- תיבת סימון --&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"checkbox"</span> <span class="attr">id</span>=<span class="val">"agree"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"agree"</span><span class="tag">&gt;</span>אני מסכים לתנאים<span class="tag">&lt;/label&gt;</span>
+
+    <span class="comment">&lt;!-- תפריט נפתח --&gt;</span>
+    <span class="tag">&lt;select</span> <span class="attr">name</span>=<span class="val">"city"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"tlv"</span><span class="tag">&gt;</span>תל אביב<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"jlm"</span><span class="tag">&gt;</span>ירושלים<span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;/select&gt;</span>
+
+    <span class="comment">&lt;!-- כפתור שליחה --&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"submit"</span><span class="tag">&gt;</span>שלח<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span></pre>
+            </div>
+
+            <div class="info-card warning">
+                <div class="info-card-title">⚠️ שימו לב</div>
+                <p>תמיד קשרו <code>&lt;label&gt;</code> ל-<code>&lt;input&gt;</code> דרך <code>for</code> ו-<code>id</code> תואמים. זה קריטי לנגישות - מאפשר ללחוץ על התווית כדי לבחור בשדה.</p>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION 3 - יסודות CSS
+        ================================= -->
+        <section class="lesson-section" id="css-basics">
+            <span class="section-label label-css">CSS</span>
+            <h2>יסודות CSS</h2>
+            <p class="section-desc">CSS - השפה שמעצבת את מה ש-HTML בנה. צבעים, גדלים, מיקום, אנימציות - הכל כאן.</p>
+
+            <h3>3 דרכים לשלב CSS</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>css-methods.html</span>
+                </div>
+<pre><span class="comment">&lt;!-- 1. Inline - ישירות על האלמנט (לא מומלץ) --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"color: red; font-size: 18px;"</span><span class="tag">&gt;</span>טקסט אדום<span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- 2. Internal - בתוך תגית style ב-head --&gt;</span>
+<span class="tag">&lt;style&gt;</span>
+    <span class="selector">p</span> { <span class="prop">color</span>: <span class="val">red</span>; }
+<span class="tag">&lt;/style&gt;</span>
+
+<span class="comment">&lt;!-- 3. External - קובץ חיצוני (מומלץ!) --&gt;</span>
+<span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"style.css"</span><span class="tag">&gt;</span></pre>
+            </div>
+
+            <h3>סלקטורים - איך "מכוונים" לאלמנטים</h3>
+            <div class="info-card">
+                <div class="selector-example">
+                    <span class="selector-code">p</span>
+                    <span class="selector-desc">כל תגיות <code>&lt;p&gt;</code></span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">.my-class</span>
+                    <span class="selector-desc">כל אלמנט עם <code>class="my-class"</code></span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">#my-id</span>
+                    <span class="selector-desc">האלמנט הספציפי עם <code>id="my-id"</code></span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">div p</span>
+                    <span class="selector-desc">כל <code>p</code> שנמצא בתוך <code>div</code> (צאצא)</span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">div > p</span>
+                    <span class="selector-desc">רק <code>p</code> שהוא ילד ישיר של <code>div</code></span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">a:hover</span>
+                    <span class="selector-desc">קישור כשעוברים עליו עם העכבר</span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">input:focus</span>
+                    <span class="selector-desc">שדה קלט שמוקד (נלחץ עליו)</span>
+                </div>
+                <div class="selector-example">
+                    <span class="selector-code">li:first-child</span>
+                    <span class="selector-desc">הפריט הראשון ברשימה</span>
+                </div>
+            </div>
+
+            <h3>תכונות CSS נפוצות</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>style.css</span>
+                </div>
+<pre><span class="comment">/* --- צבעים וטקסט --- */</span>
+<span class="selector">.card</span> {
+    <span class="prop">color</span>: <span class="val">#333</span>;                 <span class="comment">/* צבע טקסט */</span>
+    <span class="prop">background-color</span>: <span class="val">#f5f5f5</span>;     <span class="comment">/* צבע רקע */</span>
+    <span class="prop">font-size</span>: <span class="val">16px</span>;              <span class="comment">/* גודל גופן */</span>
+    <span class="prop">font-weight</span>: <span class="val">bold</span>;            <span class="comment">/* עובי גופן */</span>
+    <span class="prop">text-align</span>: <span class="val">center</span>;           <span class="comment">/* יישור טקסט */</span>
+    <span class="prop">line-height</span>: <span class="val">1.6</span>;             <span class="comment">/* גובה שורה */</span>
+}
+
+<span class="comment">/* --- מידות ומרווחים --- */</span>
+<span class="selector">.box</span> {
+    <span class="prop">width</span>: <span class="val">300px</span>;                <span class="comment">/* רוחב */</span>
+    <span class="prop">max-width</span>: <span class="val">100%</span>;             <span class="comment">/* רוחב מקסימלי */</span>
+    <span class="prop">height</span>: <span class="val">auto</span>;                <span class="comment">/* גובה אוטומטי */</span>
+    <span class="prop">padding</span>: <span class="val">20px</span>;               <span class="comment">/* ריווח פנימי */</span>
+    <span class="prop">margin</span>: <span class="val">16px auto</span>;           <span class="comment">/* ריווח חיצוני, ממורכז */</span>
+}
+
+<span class="comment">/* --- גבולות ועיצוב --- */</span>
+<span class="selector">.styled</span> {
+    <span class="prop">border</span>: <span class="val">2px solid #ddd</span>;      <span class="comment">/* גבול */</span>
+    <span class="prop">border-radius</span>: <span class="val">12px</span>;         <span class="comment">/* פינות מעוגלות */</span>
+    <span class="prop">box-shadow</span>: <span class="val">0 4px 12px rgba(0,0,0,0.1)</span>; <span class="comment">/* צל */</span>
+    <span class="prop">opacity</span>: <span class="val">0.9</span>;               <span class="comment">/* שקיפות */</span>
+}
+
+<span class="comment">/* --- מעברים ואנימציות --- */</span>
+<span class="selector">.button</span> {
+    <span class="prop">transition</span>: <span class="val">all 0.3s ease</span>;   <span class="comment">/* מעבר חלק */</span>
+    <span class="prop">cursor</span>: <span class="val">pointer</span>;             <span class="comment">/* סמן יד */</span>
+}
+
+<span class="selector">.button:hover</span> {
+    <span class="prop">transform</span>: <span class="val">translateY(-2px)</span>;  <span class="comment">/* הזזה למעלה ב-hover */</span>
+    <span class="prop">box-shadow</span>: <span class="val">0 6px 20px rgba(0,0,0,0.15)</span>;
+}</pre>
+            </div>
+
+            <h3>יחידות מידה</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>יחידה</th>
+                        <th>סוג</th>
+                        <th>הסבר</th>
+                        <th>שימוש נפוץ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>px</code></td>
+                        <td>מוחלט</td>
+                        <td>פיקסלים - גודל קבוע</td>
+                        <td>גבולות, צללים</td>
+                    </tr>
+                    <tr>
+                        <td><code>rem</code></td>
+                        <td>יחסי</td>
+                        <td>יחסי לגודל הגופן של html</td>
+                        <td>גופנים, ריווחים</td>
+                    </tr>
+                    <tr>
+                        <td><code>em</code></td>
+                        <td>יחסי</td>
+                        <td>יחסי לגודל הגופן של האלמנט האב</td>
+                        <td>ריווחים פנימיים</td>
+                    </tr>
+                    <tr>
+                        <td><code>%</code></td>
+                        <td>יחסי</td>
+                        <td>אחוז מהמכולה</td>
+                        <td>רוחב, גובה</td>
+                    </tr>
+                    <tr>
+                        <td><code>vw / vh</code></td>
+                        <td>יחסי</td>
+                        <td>אחוז מרוחב / גובה המסך</td>
+                        <td>Hero sections, גבהים</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ================================
+             SECTION 4 - Box Model
+        ================================= -->
+        <section class="lesson-section" id="box-model">
+            <span class="section-label label-css">CSS</span>
+            <h2>Box Model</h2>
+            <p class="section-desc">
+                כל אלמנט ב-HTML הוא קופסה. ה-Box Model מגדיר 4 שכבות סביב התוכן.
+            </p>
+
+            <div class="demo-area">
+                <h4>הדגמה חיה</h4>
+                <div class="box-model-demo">
+                    <div class="box-margin">
+                        <div class="box-border">
+                            <div class="box-padding">
+                                <div class="box-content">content</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>box-model.css</span>
+                </div>
+<pre><span class="selector">.element</span> {
+    <span class="comment">/* Content - התוכן עצמו */</span>
+    <span class="prop">width</span>: <span class="val">200px</span>;
+    <span class="prop">height</span>: <span class="val">100px</span>;
+
+    <span class="comment">/* Padding - ריווח פנימי (בין התוכן לגבול) */</span>
+    <span class="prop">padding</span>: <span class="val">20px</span>;            <span class="comment">/* כל הצדדים */</span>
+    <span class="prop">padding</span>: <span class="val">10px 20px</span>;        <span class="comment">/* למעלה/למטה | ימין/שמאל */</span>
+    <span class="prop">padding</span>: <span class="val">10px 20px 30px 40px</span>; <span class="comment">/* top right bottom left */</span>
+
+    <span class="comment">/* Border - הגבול */</span>
+    <span class="prop">border</span>: <span class="val">2px solid #333</span>;
+
+    <span class="comment">/* Margin - ריווח חיצוני (בין האלמנט לשכנים) */</span>
+    <span class="prop">margin</span>: <span class="val">16px</span>;
+
+    <span class="comment">/* חשוב! box-sizing שולט איך מחושב הרוחב */</span>
+    <span class="prop">box-sizing</span>: <span class="val">border-box</span>;   <span class="comment">/* width כולל padding + border */</span>
+}</pre>
+            </div>
+
+            <div class="info-card important">
+                <div class="info-card-title">🔑 קריטי</div>
+                <p>תמיד הגדירו <code>box-sizing: border-box</code> על כל האלמנטים (דרך ה-reset).
+                בלי זה, padding ו-border מתווספים מעבר ל-width ויוצרים חישובים מבלבלים.</p>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION 5 - Flexbox & Grid
+        ================================= -->
+        <section class="lesson-section" id="layout">
+            <span class="section-label label-structure">LAYOUT</span>
+            <h2>Flexbox &amp; Grid</h2>
+            <p class="section-desc">שתי שיטות הפריסה המודרניות. Flexbox לפריסה חד-מימדית, Grid לדו-מימדית.</p>
+
+            <h3>Flexbox - פריסה גמישה</h3>
+            <p>מתאים לשורות, תפריטים, כרטיסים בשורה, ומרכוז אלמנטים.</p>
+
+            <div class="demo-area">
+                <h4>הדגמה - Flex Row</h4>
+                <div class="flex-demo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                    <div class="flex-item">Item 4</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>flexbox.css</span>
+                </div>
+<pre><span class="comment">/* המכולה - הופכת את הילדים ל-flex items */</span>
+<span class="selector">.container</span> {
+    <span class="prop">display</span>: <span class="val">flex</span>;
+    <span class="prop">gap</span>: <span class="val">16px</span>;                  <span class="comment">/* רווח בין פריטים */</span>
+
+    <span class="comment">/* כיוון */</span>
+    <span class="prop">flex-direction</span>: <span class="val">row</span>;         <span class="comment">/* שורה (ברירת מחדל) */</span>
+    <span class="comment">/* flex-direction: column;       עמודה */</span>
+
+    <span class="comment">/* יישור על הציר הראשי */</span>
+    <span class="prop">justify-content</span>: <span class="val">center</span>;     <span class="comment">/* center | space-between | flex-start | flex-end */</span>
+
+    <span class="comment">/* יישור על הציר המשני */</span>
+    <span class="prop">align-items</span>: <span class="val">center</span>;         <span class="comment">/* center | flex-start | flex-end | stretch */</span>
+
+    <span class="comment">/* האם לשבור שורה? */</span>
+    <span class="prop">flex-wrap</span>: <span class="val">wrap</span>;             <span class="comment">/* מאפשר ירידת שורה */</span>
+}
+
+<span class="comment">/* טריק: מרכוז מושלם */</span>
+<span class="selector">.centered</span> {
+    <span class="prop">display</span>: <span class="val">flex</span>;
+    <span class="prop">justify-content</span>: <span class="val">center</span>;
+    <span class="prop">align-items</span>: <span class="val">center</span>;
+    <span class="prop">min-height</span>: <span class="val">100vh</span>;
+}</pre>
+            </div>
+
+            <h3>CSS Grid - פריסת רשת</h3>
+            <p>מתאים לעמודים שלמים, גלריות, ופריסות מורכבות בשני ממדים.</p>
+
+            <div class="demo-area">
+                <h4>הדגמה - Grid Layout</h4>
+                <div class="grid-demo">
+                    <div class="grid-item span-2">Header (span 2)</div>
+                    <div class="grid-item">Sidebar</div>
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>grid.css</span>
+                </div>
+<pre><span class="selector">.grid-container</span> {
+    <span class="prop">display</span>: <span class="val">grid</span>;
+
+    <span class="comment">/* הגדרת עמודות */</span>
+    <span class="prop">grid-template-columns</span>: <span class="val">1fr 1fr 1fr</span>;      <span class="comment">/* 3 עמודות שוות */</span>
+    <span class="comment">/* grid-template-columns: 200px 1fr 200px;  קבוע-גמיש-קבוע */</span>
+    <span class="comment">/* grid-template-columns: repeat(3, 1fr);   קיצור ל-3 שוות */</span>
+
+    <span class="comment">/* רווחים */</span>
+    <span class="prop">gap</span>: <span class="val">16px</span>;
+}
+
+<span class="comment">/* פריט שתופס 2 עמודות */</span>
+<span class="selector">.wide-item</span> {
+    <span class="prop">grid-column</span>: <span class="val">span 2</span>;
+}
+
+<span class="comment">/* רשת רספונסיבית אוטומטית - שורת קסם! */</span>
+<span class="selector">.auto-grid</span> {
+    <span class="prop">display</span>: <span class="val">grid</span>;
+    <span class="prop">grid-template-columns</span>: <span class="val">repeat(auto-fit, minmax(250px, 1fr))</span>;
+    <span class="prop">gap</span>: <span class="val">16px</span>;
+}</pre>
+            </div>
+
+            <div class="info-card tip">
+                <div class="info-card-title">💡 מתי להשתמש במה?</div>
+                <p>
+                    Flexbox - כשהפריסה היא בכיוון אחד: שורת כפתורים, תפריט, מרכוז.<br>
+                    Grid - כשצריך שליטה בשני ממדים: דף שלם, גלריה, דשבורד.<br>
+                    אפשר (ורצוי!) לשלב ביניהם.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION 6 - רספונסיביות
+        ================================= -->
+        <section class="lesson-section" id="responsive">
+            <span class="section-label label-tips">RESPONSIVE</span>
+            <h2>עיצוב רספונסיבי</h2>
+            <p class="section-desc">האתר צריך להיראות טוב על כל מסך - מטלפון ועד מסך 4K.</p>
+
+            <h3>Meta Viewport</h3>
+            <p>חובה ב-head כדי שהמובייל ידע לא לעשות zoom out:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>head</span>
+                </div>
+<pre><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></pre>
+            </div>
+
+            <h3>Media Queries</h3>
+            <p>חוקי CSS שמופעלים רק בגדלי מסך מסוימים:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>responsive.css</span>
+                </div>
+<pre><span class="comment">/* עיצוב ברירת מחדל - Desktop */</span>
+<span class="selector">.grid</span> {
+    <span class="prop">display</span>: <span class="val">grid</span>;
+    <span class="prop">grid-template-columns</span>: <span class="val">repeat(3, 1fr)</span>;
+    <span class="prop">gap</span>: <span class="val">24px</span>;
+}
+
+<span class="comment">/* טאבלט - מתחת ל-768px */</span>
+<span class="keyword">@media</span> (<span class="prop">max-width</span>: <span class="val">768px</span>) {
+    <span class="selector">.grid</span> {
+        <span class="prop">grid-template-columns</span>: <span class="val">repeat(2, 1fr)</span>;
+        <span class="prop">gap</span>: <span class="val">16px</span>;
+    }
+}
+
+<span class="comment">/* מובייל - מתחת ל-480px */</span>
+<span class="keyword">@media</span> (<span class="prop">max-width</span>: <span class="val">480px</span>) {
+    <span class="selector">.grid</span> {
+        <span class="prop">grid-template-columns</span>: <span class="val">1fr</span>;  <span class="comment">/* עמודה אחת */</span>
+    }
+
+    <span class="selector">.hero h1</span> {
+        <span class="prop">font-size</span>: <span class="val">1.5rem</span>;          <span class="comment">/* הקטנת כותרת */</span>
+    }
+}
+
+<span class="comment">/* clamp - גודל רספונסיבי אוטומטי בלי media query */</span>
+<span class="selector">h1</span> {
+    <span class="comment">/* מינימום | מועדף | מקסימום */</span>
+    <span class="prop">font-size</span>: <span class="val">clamp(1.5rem, 4vw, 3rem)</span>;
+}</pre>
+            </div>
+
+            <h3>דוגמת כפתורים - סגנונות שונים</h3>
+            <div class="demo-area">
+                <h4>הדגמה - Button Styles</h4>
+                <div class="button-demo">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-outline">Outline</button>
+                    <button class="btn btn-ghost">Ghost</button>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>buttons.css</span>
+                </div>
+<pre><span class="comment">/* כפתור בסיסי */</span>
+<span class="selector">.btn</span> {
+    <span class="prop">padding</span>: <span class="val">10px 24px</span>;
+    <span class="prop">border</span>: <span class="val">none</span>;
+    <span class="prop">border-radius</span>: <span class="val">8px</span>;
+    <span class="prop">font-size</span>: <span class="val">0.9rem</span>;
+    <span class="prop">cursor</span>: <span class="val">pointer</span>;
+    <span class="prop">transition</span>: <span class="val">all 0.25s ease</span>;  <span class="comment">/* מעבר חלק לכל שינוי */</span>
+}
+
+<span class="comment">/* כפתור ראשי */</span>
+<span class="selector">.btn-primary</span> {
+    <span class="prop">background</span>: <span class="val">#22d3ee</span>;
+    <span class="prop">color</span>: <span class="val">#000</span>;
+}
+
+<span class="selector">.btn-primary:hover</span> {
+    <span class="prop">transform</span>: <span class="val">translateY(-2px)</span>;
+    <span class="prop">box-shadow</span>: <span class="val">0 4px 16px rgba(34,211,238,0.3)</span>;
+}
+
+<span class="comment">/* כפתור מסגרת */</span>
+<span class="selector">.btn-outline</span> {
+    <span class="prop">background</span>: <span class="val">transparent</span>;
+    <span class="prop">border</span>: <span class="val">1.5px solid #22d3ee</span>;
+    <span class="prop">color</span>: <span class="val">#22d3ee</span>;
+}</pre>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION 7 - CSS Variables
+        ================================= -->
+        <section class="lesson-section">
+            <span class="section-label label-tips">PRO TIP</span>
+            <h2>CSS Variables - משתנים</h2>
+            <p class="section-desc">הגדירו ערכים פעם אחת, השתמשו בהם בכל מקום. שינוי אחד משפיע על כל האתר.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>variables.css</span>
+                </div>
+<pre><span class="comment">/* הגדרת משתנים ב-:root (ברמה הגלובלית) */</span>
+<span class="selector">:root</span> {
+    <span class="prop">--primary-color</span>: <span class="val">#22d3ee</span>;
+    <span class="prop">--bg-dark</span>: <span class="val">#0a0e1a</span>;
+    <span class="prop">--text-color</span>: <span class="val">#e2e8f0</span>;
+    <span class="prop">--spacing</span>: <span class="val">16px</span>;
+    <span class="prop">--radius</span>: <span class="val">12px</span>;
+    <span class="prop">--font-main</span>: <span class="val">'IBM Plex Sans Hebrew', sans-serif</span>;
+}
+
+<span class="comment">/* שימוש במשתנים */</span>
+<span class="selector">.card</span> {
+    <span class="prop">background</span>: <span class="val">var(--bg-dark)</span>;
+    <span class="prop">color</span>: <span class="val">var(--text-color)</span>;
+    <span class="prop">padding</span>: <span class="val">var(--spacing)</span>;
+    <span class="prop">border-radius</span>: <span class="val">var(--radius)</span>;
+    <span class="prop">border</span>: <span class="val">1px solid var(--primary-color)</span>;
+}
+
+<span class="comment">/* עכשיו שינוי של --primary-color</span>
+<span class="comment">   ישפיע על כל מקום שמשתמש בו! */</span></pre>
+            </div>
+
+            <div class="info-card tip">
+                <div class="info-card-title">💡 הדף הזה עצמו</div>
+                <p>כל הצבעים, הגופנים והמרווחים בדף הזה מוגדרים כ-CSS Variables ב-<code>:root</code>.
+                פתחו את ה-DevTools (F12), שנו ערך של משתנה, ותראו את כל הדף מתעדכן בזמן אמת.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+    <footer class="site-footer">
+        <p>Web Application Fundamentals - נבנה לצורך לימוד HTML &amp; CSS</p>
+        <p style="margin-top: 8px;">פתחו את קוד המקור (Ctrl+U) ותראו את ההערות בקוד 🔍</p>
+    </footer>
+
+</body>
+</html>
