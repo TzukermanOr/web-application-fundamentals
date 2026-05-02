@@ -1597,9 +1597,120 @@
             .form-flow-arrow { transform: rotate(90deg); }
             .form-live-demo .radio-group { flex-direction: column; gap: 8px; }
         }
+
+        /* ===========================
+           STICKY SIDEBAR NAV
+        =========================== */
+        .side-nav {
+            position: fixed;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .side-nav a {
+            display: block;
+            padding: 6px 12px;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.72rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+            white-space: nowrap;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .side-nav a:hover {
+            color: var(--accent-cyan);
+            border-color: rgba(34,211,238,0.3);
+            background: rgba(34,211,238,0.05);
+        }
+
+        @media (max-width: 1200px) {
+            .side-nav { display: none; }
+        }
+
+        /* ===========================
+           PRODUCT GRID for Mission 3
+        =========================== */
+        .product-grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .product-card-demo {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            color: #333;
+            transition: 0.2s;
+        }
+
+        .product-card-demo:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .product-card-demo .prod-img {
+            width: 100%;
+            height: 100px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-card-demo .prod-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .product-card-demo .prod-price {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .product-grid-demo { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Sticky Sidebar Navigation -->
+    <nav class="side-nav">
+        <a href="#html-basics">1. מבנה HTML</a>
+        <a href="#tags">2. תגיות</a>
+        <a href="#css-basics">3. יסודות CSS</a>
+        <a href="#box-model">4. Box Model</a>
+        <a href="#layout">5. Flex & Grid</a>
+        <a href="#responsive">6. רספונסיביות</a>
+        <a href="#file-paths">7. נתיבים</a>
+        <a href="#iframe-section">8. iframe</a>
+        <a href="#forms-section">9. טפסים</a>
+        <a href="#database-section">10. Database</a>
+        <a href="#mission">11. משימה 1</a>
+        <a href="#mission2">12. משימה 2</a>
+        <a href="#mission3">13. משימה 3</a>
+    </nav>
 
     <!-- ================================
          HERO SECTION - הבאנר הראשי
@@ -1619,8 +1730,10 @@
                 <a href="#file-paths">קישור קבצים</a>
                 <a href="#iframe-section">iframe והטמעות</a>
                 <a href="#forms-section">טפסים (Forms)</a>
+                <a href="#database-section">Database</a>
                 <a href="#mission">משימה 1</a>
                 <a href="#mission2">משימה 2</a>
+                <a href="#mission3">משימה 3</a>
             </nav>
         </div>
     </section>
@@ -3521,6 +3634,212 @@
         </section>
 
         <!-- ================================
+             SECTION - Database (מסד נתונים)
+        ================================= -->
+        <section class="lesson-section" id="database-section">
+            <span class="section-label" style="color: var(--accent-purple);">DATABASE</span>
+            <h2>מסד נתונים - Database</h2>
+            <p class="section-desc">
+                כשהטופס נשלח - לאן המידע הולך? לשרת, ומשם למסד נתונים.
+                ה-Database הוא "המוח" שזוכר הכל: משתמשים, מוצרים, הזמנות.
+            </p>
+
+            <h3>1. מה זה מסד נתונים?</h3>
+            <p>מסד נתונים זה כמו טבלת Excel ענקית ששמורה על השרת. כל טבלה מכילה נתונים מסוג מסוים:</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">👥</div>
+                    <h4>טבלת Users</h4>
+                    <p>שם משתמש, סיסמה (מוצפנת!), מייל, תאריך הרשמה.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">📦</div>
+                    <h4>טבלת Products</h4>
+                    <p>שם מוצר, מחיר, תיאור, כמות במלאי, תמונה.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">🛒</div>
+                    <h4>טבלת Orders</h4>
+                    <p>מי הזמין, מה הזמין, כמה שילם, מתי, סטטוס משלוח.</p>
+                </div>
+            </div>
+
+            <h3>2. איך זה מתחבר לטופס?</h3>
+
+            <div class="form-flow">
+                <div class="form-flow-box">
+                    <div class="flow-icon">📝</div>
+                    <div class="flow-label">טופס HTML</div>
+                    <div class="flow-value">form action="/register"</div>
+                </div>
+                <div class="form-flow-arrow">→</div>
+                <div class="form-flow-box">
+                    <div class="flow-icon">🖥️</div>
+                    <div class="flow-label">שרת (Backend)</div>
+                    <div class="flow-value">Node.js / Python</div>
+                </div>
+                <div class="form-flow-arrow">→</div>
+                <div class="form-flow-box">
+                    <div class="flow-icon">🗄️</div>
+                    <div class="flow-label">Database</div>
+                    <div class="flow-value">SQL / MongoDB</div>
+                </div>
+            </div>
+
+            <p>ה-HTML לבד <strong>לא יכול</strong> לשמור נתונים. צריך שפת שרת (Backend) שמקבלת את הטופס ושומרת ל-DB.</p>
+
+            <h3>3. SQL - השפה של מסדי נתונים</h3>
+            <p>SQL (Structured Query Language) היא השפה שבה מדברים עם מסד הנתונים. 4 פעולות בסיסיות:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>sql-basics.sql</span>
+                </div>
+<pre><span class="comment">-- יצירת טבלה</span>
+<span class="keyword">CREATE TABLE</span> <span class="val">users</span> (
+    <span class="attr">id</span>       <span class="val">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    <span class="attr">username</span> <span class="val">VARCHAR(50)</span>,
+    <span class="attr">password</span> <span class="val">VARCHAR(255)</span>,
+    <span class="attr">email</span>    <span class="val">VARCHAR(100)</span>,
+    <span class="attr">created</span>  <span class="val">DATETIME DEFAULT NOW()</span>
+);
+
+<span class="comment">-- הוספת משתמש (כשנרשמים)</span>
+<span class="keyword">INSERT INTO</span> <span class="val">users</span> (username, password, email)
+<span class="keyword">VALUES</span> (<span class="string">'admin'</span>, <span class="string">'hashed_pass'</span>, <span class="string">'admin@site.com'</span>);
+
+<span class="comment">-- שליפת משתמש (כשמתחברים)</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="val">users</span>
+<span class="keyword">WHERE</span> username = <span class="string">'admin'</span> <span class="keyword">AND</span> password = <span class="string">'hashed_pass'</span>;
+
+<span class="comment">-- עדכון נתונים</span>
+<span class="keyword">UPDATE</span> <span class="val">users</span> <span class="keyword">SET</span> email = <span class="string">'new@email.com'</span>
+<span class="keyword">WHERE</span> id = <span class="val">1</span>;
+
+<span class="comment">-- מחיקת משתמש</span>
+<span class="keyword">DELETE FROM</span> <span class="val">users</span> <span class="keyword">WHERE</span> id = <span class="val">5</span>;</pre>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>פעולה</th>
+                        <th>SQL</th>
+                        <th>מתי?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Create</strong></td>
+                        <td><code>INSERT INTO</code></td>
+                        <td>הרשמה, הוספת מוצר, הזמנה חדשה</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Read</strong></td>
+                        <td><code>SELECT</code></td>
+                        <td>התחברות, הצגת מוצרים, חיפוש</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Update</strong></td>
+                        <td><code>UPDATE</code></td>
+                        <td>עדכון פרופיל, שינוי סטטוס הזמנה</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delete</strong></td>
+                        <td><code>DELETE</code></td>
+                        <td>מחיקת חשבון, הסרת מוצר</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4. דוגמה: טבלת מוצרים</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>products.sql</span>
+                </div>
+<pre><span class="keyword">CREATE TABLE</span> <span class="val">products</span> (
+    <span class="attr">id</span>          <span class="val">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    <span class="attr">name</span>        <span class="val">VARCHAR(100)</span>,
+    <span class="attr">price</span>       <span class="val">DECIMAL(10, 2)</span>,
+    <span class="attr">description</span> <span class="val">TEXT</span>,
+    <span class="attr">image_url</span>   <span class="val">VARCHAR(255)</span>,
+    <span class="attr">stock</span>       <span class="val">INT DEFAULT 0</span>
+);
+
+<span class="comment">-- הוספת מוצרים</span>
+<span class="keyword">INSERT INTO</span> <span class="val">products</span> (name, price, description, stock) <span class="keyword">VALUES</span>
+    (<span class="string">'מחשב נייד Gaming'</span>, <span class="val">4500.00</span>, <span class="string">'מסך 15 אינץ, 16GB RAM'</span>, <span class="val">10</span>),
+    (<span class="string">'מקלדת מכנית'</span>, <span class="val">350.00</span>, <span class="string">'מתגי Cherry MX'</span>, <span class="val">25</span>),
+    (<span class="string">'עכבר אלחוטי'</span>, <span class="val">150.00</span>, <span class="string">'חיישן 16000 DPI'</span>, <span class="val">50</span>);
+
+<span class="comment">-- שליפת כל המוצרים למחיר עולה</span>
+<span class="keyword">SELECT</span> name, price <span class="keyword">FROM</span> <span class="val">products</span>
+<span class="keyword">ORDER BY</span> price <span class="keyword">ASC</span>;</pre>
+            </div>
+
+            <h3>5. איך השרת מקשר טופס ל-DB</h3>
+            <p>דוגמה פשוטה ב-Node.js (לא חלק מהמשימה, רק להבנה):</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>server.js (Node.js + Express) - לצורך הבנה</span>
+                </div>
+<pre><span class="comment">// השרת מקבל את הטופס ושומר ל-DB</span>
+<span class="keyword">const</span> express = <span class="keyword">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> mysql = <span class="keyword">require</span>(<span class="string">'mysql'</span>);
+
+<span class="comment">// חיבור למסד נתונים</span>
+<span class="keyword">const</span> db = mysql.<span class="prop">createConnection</span>({
+    <span class="attr">host</span>: <span class="string">'localhost'</span>,
+    <span class="attr">user</span>: <span class="string">'root'</span>,
+    <span class="attr">password</span>: <span class="string">'mypassword'</span>,
+    <span class="attr">database</span>: <span class="string">'my_store'</span>
+});
+
+<span class="comment">// כשהטופס נשלח ב-POST</span>
+app.<span class="prop">post</span>(<span class="string">'/register'</span>, (req, res) => {
+    <span class="keyword">const</span> { username, email, password } = req.body;
+
+    <span class="comment">// שמירה ל-DB</span>
+    db.<span class="prop">query</span>(
+        <span class="string">'INSERT INTO users (username, email, password) VALUES (?, ?, ?)'</span>,
+        [username, email, password],
+        (err) => {
+            <span class="keyword">if</span> (err) res.<span class="prop">send</span>(<span class="string">'שגיאה!'</span>);
+            <span class="keyword">else</span> res.<span class="prop">send</span>(<span class="string">'נרשמת בהצלחה!'</span>);
+        }
+    );
+});</pre>
+            </div>
+
+            <div class="cyber-alert">
+                <div class="cyber-alert-title">🚩 SQL Injection - המתקפה הכי נפוצה!</div>
+                <p>
+                    אם השרת שם את הקלט ישירות ב-SQL בלי הגנה, תוקף יכול להזין בשדה username:
+                    <code>' OR 1=1 --</code> ולעקוף את ההתחברות.
+                    לכן תמיד משתמשים ב-<strong>Prepared Statements</strong> (הסימני <code>?</code> בדוגמה למעלה).
+                    זה נושא מרכזי בסייבר שנלמד בהמשך.
+                </p>
+            </div>
+
+            <div class="info-card tip">
+                <div class="info-card-title">💡 סיכום מה כל שכבה עושה</div>
+                <p>
+                    <strong>HTML</strong> - יוצר את הטופס שהמשתמש רואה (Frontend).<br>
+                    <strong>JavaScript</strong> - מוודא קלט לפני שליחה (Frontend validation).<br>
+                    <strong>Node.js / Python</strong> - מקבל את הטופס בשרת (Backend).<br>
+                    <strong>SQL</strong> - שומר/שולף נתונים מ-Database.<br>
+                    בשלב הזה אנחנו לומדים את ה-HTML בלבד - אבל חשוב להבין את התמונה הגדולה.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================================
              SECTION - משימת כיתה 1
         ================================= -->
         <section class="lesson-section mission-section" id="mission">
@@ -4030,6 +4349,303 @@
                     <strong>name</strong> - בלי name על ה-input, המידע לא נשלח! כל שדה חייב name.<br>
                     <strong>iframe</strong> - השתמשו בקוד embed מ-YouTube/Maps. אל תשכחו title.<br>
                     <strong>required</strong> - הוסיפו לשדות חובה ותנסו לשלוח בלי למלא - תראו את ההודעה.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================================
+             SECTION - משימת כיתה 3
+        ================================= -->
+        <section class="lesson-section mission-section" id="mission3">
+            <div class="mission-header">
+                <span class="section-label" style="color: var(--accent-orange);">CLASS MISSION 3 - ADVANCED</span>
+                <h2>🎯 משימה 3: חנות אונליין מלאה (4 דפים)</h2>
+                <p style="color: var(--text-secondary); margin-top: 8px;">
+                    בנו אתר חנות מלא עם 4 דפים: ראשי, מוצרים (9 פריטים מעוצבים), מידע על מוצר, וטופס הזמנה.
+                    <br>המשימה הזו משלבת את כל מה שלמדתם: HTML, נתיבים, iframe, טפסים, ופריסה עם CSS.
+                </p>
+            </div>
+
+            <!-- מבנה ויזואלי -->
+            <h3>מבנה הפרויקט - 4 קבצים</h3>
+
+            <div class="file-structure-visual">
+                <div class="file-node">
+                    <div class="file-node-icon">🏠</div>
+                    <div class="file-node-name">index.html</div>
+                    <div class="file-node-desc">דף ראשי + ניווט</div>
+                </div>
+                <div class="file-arrow">⇄</div>
+                <div class="file-node">
+                    <div class="file-node-icon">🛍️</div>
+                    <div class="file-node-name">products.html</div>
+                    <div class="file-node-desc">9 מוצרים בגריד</div>
+                </div>
+                <div class="file-arrow">⇄</div>
+                <div class="file-node">
+                    <div class="file-node-icon">📋</div>
+                    <div class="file-node-name">info.html</div>
+                    <div class="file-node-desc">מידע + מחיר</div>
+                </div>
+                <div class="file-arrow">⇄</div>
+                <div class="file-node">
+                    <div class="file-node-icon">🛒</div>
+                    <div class="file-node-name">order.html</div>
+                    <div class="file-node-desc">טופס הזמנה</div>
+                </div>
+            </div>
+
+            <!-- דרישות כל קובץ -->
+            <h3>הדרישות</h3>
+
+            <div class="step-card">
+                <div class="step-card-header">
+                    <span class="step-badge">קובץ 1</span>
+                    <h4>index.html - דף ראשי</h4>
+                </div>
+                <div class="step-card-body">
+                    <ul>
+                        <li>כותרת <code>&lt;h1&gt;</code> של שם החנות</li>
+                        <li>פסקה קצרה <code>&lt;p&gt;</code> על החנות</li>
+                        <li>תפריט ניווט <code>&lt;nav&gt;</code> לכל 3 הדפים האחרים</li>
+                        <li>iframe של סרטון YouTube שמציג את החנות/מוצרים</li>
+                        <li>קישורים לאתרים חיצוניים (KSP, אמזון וכו')</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-card-header">
+                    <span class="step-badge">קובץ 2</span>
+                    <h4>products.html - קטלוג 9 מוצרים</h4>
+                </div>
+                <div class="step-card-body">
+                    <ul>
+                        <li>9 מוצרים מסודרים <strong>בגריד 3x3</strong></li>
+                        <li>כל מוצר כולל: תמונה (או placeholder), שם, ומחיר</li>
+                        <li>כל מוצר הוא <strong>קישור</strong> ל-<code>info.html</code></li>
+                        <li>השתמשו ב-CSS ל-<strong>grid/flexbox</strong> כדי לסדר את המוצרים</li>
+                        <li>הוסיפו <code>&lt;style&gt;</code> בתוך ה-<code>&lt;head&gt;</code> לעיצוב</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-card-header">
+                    <span class="step-badge">קובץ 3</span>
+                    <h4>info.html - מידע על מוצר</h4>
+                </div>
+                <div class="step-card-body">
+                    <ul>
+                        <li>שם המוצר ב-<code>&lt;h1&gt;</code></li>
+                        <li>תמונה גדולה <code>&lt;img&gt;</code></li>
+                        <li>מחיר ב-<code>&lt;h2&gt;</code> או <code>&lt;strong&gt;</code></li>
+                        <li>פסקת תיאור <code>&lt;p&gt;</code></li>
+                        <li>טבלה <code>&lt;table&gt;</code> עם מפרט טכני (גודל, צבע, משקל...)</li>
+                        <li>כפתור/קישור "הזמן עכשיו" שמוביל ל-<code>order.html</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-card-header">
+                    <span class="step-badge">קובץ 4</span>
+                    <h4>order.html - טופס הזמנה</h4>
+                </div>
+                <div class="step-card-body">
+                    <ul>
+                        <li>טופס <code>&lt;form&gt;</code> עם <code>method="POST"</code></li>
+                        <li>שדות: שם מלא, אימייל, טלפון, כתובת למשלוח</li>
+                        <li>תפריט נפתח <code>&lt;select&gt;</code> - בחירת מוצר</li>
+                        <li>שדה כמות <code>type="number"</code></li>
+                        <li>תאריך משלוח <code>type="date"</code></li>
+                        <li>checkbox - "אני מסכים לתנאים"</li>
+                        <li>כפתור "שלח הזמנה"</li>
+                        <li>iframe של מפת Google (מיקום המשלוח/חנות)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- קוד הדוגמה -->
+            <h3>דוגמת קוד - products.html (גריד 9 מוצרים)</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>products.html - עם CSS inline בגריד 3x3</span>
+                </div>
+<pre><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"he"</span> <span class="attr">dir</span>=<span class="val">"rtl"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>מוצרים<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+        <span class="comment">/* גריד 3 עמודות */</span>
+        <span class="selector">.products</span> {
+            <span class="prop">display</span>: <span class="val">grid</span>;
+            <span class="prop">grid-template-columns</span>: <span class="val">repeat(3, 1fr)</span>;
+            <span class="prop">gap</span>: <span class="val">20px</span>;
+            <span class="prop">padding</span>: <span class="val">20px</span>;
+        }
+        <span class="selector">.card</span> {
+            <span class="prop">border</span>: <span class="val">1px solid #ddd</span>;
+            <span class="prop">border-radius</span>: <span class="val">10px</span>;
+            <span class="prop">padding</span>: <span class="val">15px</span>;
+            <span class="prop">text-align</span>: <span class="val">center</span>;
+        }
+        <span class="selector">.card img</span> { <span class="prop">width</span>: <span class="val">100%</span>; <span class="prop">border-radius</span>: <span class="val">8px</span>; }
+        <span class="selector">.card a</span> { <span class="prop">text-decoration</span>: <span class="val">none</span>; <span class="prop">color</span>: <span class="val">inherit</span>; }
+        <span class="selector">.price</span> { <span class="prop">color</span>: <span class="val">#2563eb</span>; <span class="prop">font-weight</span>: <span class="val">bold</span>; }
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>המוצרים שלנו<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"products"</span><span class="tag">&gt;</span>
+
+        <span class="comment">&lt;!-- מוצר 1 - כל הכרטיס הוא קישור --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"card"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"info.html"</span><span class="tag">&gt;</span>
+                <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"https://via.placeholder.com/200x150"</span> <span class="attr">alt</span>=<span class="val">"מחשב"</span><span class="tag">&gt;</span>
+                <span class="tag">&lt;h3&gt;</span>מחשב נייד<span class="tag">&lt;/h3&gt;</span>
+                <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="val">"price"</span><span class="tag">&gt;</span>4,500 ש"ח<span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="comment">&lt;!-- חזרו על זה 8 פעמים עם מוצרים שונים --&gt;</span>
+        <span class="comment">&lt;!-- ... מוצר 2 עד 9 ... --&gt;</span>
+
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre>
+            </div>
+
+            <!-- תצוגה חיה של גריד -->
+            <h3>איך products.html נראה בדפדפן</h3>
+
+            <div class="iframe-demo-container">
+                <div class="iframe-demo-header">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span>products.html - גריד 9 מוצרים</span>
+                </div>
+                <div style="padding: 20px; background: #fff;">
+                    <div class="product-grid-demo">
+                        <div class="product-card-demo"><div class="prod-img">💻</div><div class="prod-name">מחשב נייד</div><div class="prod-price">4,500 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">⌨️</div><div class="prod-name">מקלדת מכנית</div><div class="prod-price">350 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">🖱️</div><div class="prod-name">עכבר אלחוטי</div><div class="prod-price">150 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">🎧</div><div class="prod-name">אוזניות גיימינג</div><div class="prod-price">280 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">🖥️</div><div class="prod-name">מסך 27"</div><div class="prod-price">1,200 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">📱</div><div class="prod-name">טלפון חכם</div><div class="prod-price">3,200 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">🎮</div><div class="prod-name">בקר משחק</div><div class="prod-price">220 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">💾</div><div class="prod-name">SSD 1TB</div><div class="prod-price">400 ש"ח</div></div>
+                        <div class="product-card-demo"><div class="prod-img">🔌</div><div class="prod-name">מטען מהיר</div><div class="prod-price">120 ש"ח</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>דוגמת קוד - order.html (טופס הזמנה)</h3>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                    <span>order.html - טופס הזמנה עם כל סוגי השדות</span>
+                </div>
+<pre><span class="tag">&lt;h1&gt;</span>טופס הזמנה<span class="tag">&lt;/h1&gt;</span>
+
+<span class="tag">&lt;form</span> <span class="attr">action</span>=<span class="val">"#"</span> <span class="attr">method</span>=<span class="val">"POST"</span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"name"</span><span class="tag">&gt;</span>שם מלא:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">id</span>=<span class="val">"name"</span> <span class="attr">name</span>=<span class="val">"name"</span> <span class="attr">required</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"email"</span><span class="tag">&gt;</span>אימייל:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"email"</span> <span class="attr">id</span>=<span class="val">"email"</span> <span class="attr">name</span>=<span class="val">"email"</span> <span class="attr">required</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"phone"</span><span class="tag">&gt;</span>טלפון:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"tel"</span> <span class="attr">id</span>=<span class="val">"phone"</span> <span class="attr">name</span>=<span class="val">"phone"</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"address"</span><span class="tag">&gt;</span>כתובת למשלוח:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">id</span>=<span class="val">"address"</span> <span class="attr">name</span>=<span class="val">"address"</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="comment">&lt;!-- בחירת מוצר --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"product"</span><span class="tag">&gt;</span>מוצר:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;select</span> <span class="attr">id</span>=<span class="val">"product"</span> <span class="attr">name</span>=<span class="val">"product"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">""</span><span class="tag">&gt;</span>בחרו מוצר...<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option&gt;</span>מחשב נייד - 4,500 ש"ח<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option&gt;</span>מקלדת מכנית - 350 ש"ח<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option&gt;</span>עכבר אלחוטי - 150 ש"ח<span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;/select&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="comment">&lt;!-- כמות --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"qty"</span><span class="tag">&gt;</span>כמות:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"number"</span> <span class="attr">id</span>=<span class="val">"qty"</span> <span class="attr">name</span>=<span class="val">"quantity"</span> <span class="attr">min</span>=<span class="val">"1"</span> <span class="attr">max</span>=<span class="val">"10"</span> <span class="attr">value</span>=<span class="val">"1"</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="comment">&lt;!-- תאריך --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"date"</span><span class="tag">&gt;</span>תאריך משלוח רצוי:<span class="tag">&lt;/label&gt;&lt;br&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"date"</span> <span class="attr">id</span>=<span class="val">"date"</span> <span class="attr">name</span>=<span class="val">"delivery_date"</span><span class="tag">&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="comment">&lt;!-- הסכמה --&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"checkbox"</span> <span class="attr">id</span>=<span class="val">"terms"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"terms"</span><span class="tag">&gt;</span>אני מסכים לתנאי השימוש<span class="tag">&lt;/label&gt;&lt;br&gt;&lt;br&gt;</span>
+
+    <span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"submit"</span><span class="tag">&gt;</span>שלח הזמנה<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span>
+
+<span class="comment">&lt;!-- מפה --&gt;</span>
+<span class="tag">&lt;h3&gt;</span>מיקום החנות:<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;iframe</span> <span class="attr">src</span>=<span class="val">"https://www.google.com/maps/embed?..."</span>
+    <span class="attr">width</span>=<span class="val">"100%"</span> <span class="attr">height</span>=<span class="val">"300"</span> <span class="attr">title</span>=<span class="val">"מפה"</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span></pre>
+            </div>
+
+            <!-- תצוגה חיה של טופס הזמנה -->
+            <h3>איך order.html נראה בדפדפן</h3>
+
+            <div class="iframe-demo-container">
+                <div class="iframe-demo-header">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <span>order.html - טופס הזמנה</span>
+                </div>
+                <div style="padding: 4px;">
+                    <div class="form-live-demo">
+                        <h4>טופס הזמנה</h4>
+                        <label for="m3-name">שם מלא:</label>
+                        <input type="text" id="m3-name" placeholder="ישראל ישראלי" required>
+                        <label for="m3-email">אימייל:</label>
+                        <input type="email" id="m3-email" placeholder="you@example.com" required>
+                        <label for="m3-phone">טלפון:</label>
+                        <input type="tel" id="m3-phone" placeholder="050-1234567">
+                        <label for="m3-address">כתובת למשלוח:</label>
+                        <input type="text" id="m3-address" placeholder="רחוב, עיר, מיקוד">
+                        <label for="m3-product">מוצר:</label>
+                        <select id="m3-product">
+                            <option value="">בחרו מוצר...</option>
+                            <option>💻 מחשב נייד - 4,500 ש"ח</option>
+                            <option>⌨️ מקלדת מכנית - 350 ש"ח</option>
+                            <option>🖱️ עכבר אלחוטי - 150 ש"ח</option>
+                            <option>🎧 אוזניות גיימינג - 280 ש"ח</option>
+                            <option>🖥️ מסך 27" - 1,200 ש"ח</option>
+                        </select>
+                        <label for="m3-qty">כמות:</label>
+                        <input type="number" id="m3-qty" min="1" max="10" value="1" style="width: 80px;">
+                        <label for="m3-date">תאריך משלוח רצוי:</label>
+                        <input type="date" id="m3-date">
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="m3-terms">
+                            <label for="m3-terms" style="margin:0; font-weight:400;">אני מסכים לתנאי השימוש</label>
+                        </div>
+                        <button type="button" class="submit-btn" onclick="alert('ההזמנה נשלחה! (דוגמה בלבד)')">שלח הזמנה</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card warning" style="border-right-color: var(--accent-orange);">
+                <div class="info-card-title" style="color: var(--accent-orange);">⚠️ דגשים למשימה 3</div>
+                <p>
+                    <strong>CSS חובה</strong> - השתמשו ב-<code>&lt;style&gt;</code> ב-head כדי ליצור את הגריד 3x3. בלי CSS המוצרים ייראו אחד מתחת לשני.<br>
+                    <strong>9 מוצרים</strong> - כל מוצר הוא div עם תמונה, שם ומחיר. כולם בתוך div אחד עם <code>display: grid</code>.<br>
+                    <strong>קישורים</strong> - כל כרטיס מוצר הוא קישור ל-info.html. הכפתור ב-info מקשר ל-order.html.<br>
+                    <strong>טופס</strong> - כל שדה חייב <code>name</code> + <code>id</code> + <code>label</code> עם <code>for</code> תואם.<br>
+                    <strong>ניווט</strong> - מכל דף אפשר להגיע לכל דף אחר. שימו nav בכל עמוד.<br>
+                    <strong>action="#"</strong> - שימו # ב-action כדי להישאר באותו דף (אין שרת).
                 </p>
             </div>
         </section>
